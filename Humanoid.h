@@ -1,5 +1,8 @@
-#ifndef SEPERATE_H_
-#define SEPERATE_H_
+#ifndef HUMANOID_H_ 
+#define HUMANOID_H_
+
+#include "/home/nvidia/jetson-inference/detectnet-camera/detectnet-camera.h"
+#include <stdio.h>
 
 class Humanoid {
     public:
