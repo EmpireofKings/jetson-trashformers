@@ -43,7 +43,7 @@ int main (int argc, char** argv){
             printf("ERROR: %f | STOPPING\n", xError);
             humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::STOP);
         } 
-        sleep(2);
+        sleep(1);
     }
 
     //
