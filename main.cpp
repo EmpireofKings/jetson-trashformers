@@ -20,11 +20,12 @@ int main (int argc, char** argv){
 
     //Define acceptable distance tolerance where robot will no longer react and try to turn
     int xReactionTolerance = 0.10 * humanoid->detectnetController->GetCameraWidth();
-    int areaTolerance = 0.20 * humanoid->detectnetController->GetCameraWidth() * humanoid->detectnetController->GetCameraHeight();
+    int areaTolerance = 0.50 * humanoid->detectnetController->GetCameraWidth() * humanoid->detectnetController->GetCameraHeight();
 
 
     bool bendDown = false;
-    while((inputChar = getchar()) != 27){
+    //while((inputChar = getchar()) != 27){
+    while(true){
         humanoid->detectnetController->SortBBArrayByTargetDistance();
         printf("Orientation: %i\n", humanoid->detectnetController->GetCupOrientation());
         

@@ -67,20 +67,20 @@ void Arm::SetClaw(int pos, int vel){
 }
 
 void Arm::SetDefaultPose() {   
-    Set(pose_default[0], pose_default[1], pose_default[2], pose_default[3], 60);
+    Set(pose_default[0], pose_default[1], pose_default[2], pose_default[3], 200);
 }
 
 void Arm::SetReadyPose() {
-    Set(pose_ready[0], pose_ready[1], pose_ready[2], pose_ready[3], 60);   
+    Set(pose_ready[0], pose_ready[1], pose_ready[2], pose_ready[3], 200);   
 }
 
 void Arm::SetGrabbingPose() {
-    Set(pose_grabbing[0], pose_grabbing[1], pose_ready[2], pose_ready[3], 60);
+    Set(pose_grabbing[0], pose_grabbing[1], pose_ready[2], pose_ready[3], 200);
 }
 
 void Arm::GrabCup() {
-    SetWrist(pose_grabbing[2], 60);
-    SetClaw(pose_grabbing[3], 200);
+    SetWrist(pose_grabbing[2], 200);
+    SetClaw(pose_grabbing[3], 800);
 }
 
 void Arm::LivePose() {
