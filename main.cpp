@@ -39,11 +39,11 @@ int main (int argc, char** argv){
                 humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::STOP);
                 humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::STRAFE_LEFT);
                 printf("XERROR DNE | BEND DOWN\n"); 
-                sleep(2);
+                sleep(1);
                 humanoid->arm->SetReadyPose();
-                sleep(2);
+                sleep(1);
                 humanoid->arm->SetGrabbingPose();
-                sleep(2);
+                sleep(1);
                 humanoid->arm->GrabCup();
                 break;
             }
