@@ -58,9 +58,11 @@ int main (int argc, char** argv){
 
         if(humanoid->detectnetController->bbArraySorted.size() < 1){
             bendDown = false; 
+            printf("SETTING FALSE");
         }
         else if( humanoid->detectnetController->GetCenterYFromBB(humanoid->detectnetController->bbArraySorted[0]) < ((1.0/5.0) * humanoid->detectnetController->GetCameraHeight()) ){
             bendDown = true; 
+            printf("SETTING TRUE");
         }
 
         sleep(1);
