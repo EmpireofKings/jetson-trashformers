@@ -24,7 +24,7 @@ int main (int argc, char** argv){
 
 
     bool bendDown = false;
-    while(true){
+    while((inputChar = getchar()) != 27){
         humanoid->detectnetController->SortBBArrayByTargetDistance();
         printf("Orientation: %i\n", humanoid->detectnetController->GetCupOrientation());
         
@@ -34,8 +34,17 @@ int main (int argc, char** argv){
         printf("AREA: %f\n", bbArea);
         if(xError == NULL || bbArea == -1) {
             if(bendDown){
+                humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::WALK_FORWARD);
+                humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::STOP);
+                humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::STRAFE_LEFT);
                 printf("XERROR DNE | BEND DOWN\n"); 
-               humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::BEND_DOWN);
+                sleep(2);
+                humanoid->arm->SetReadyPose();
+                sleep(2);
+                humanoid->arm->SetGrabbingPose();
+                sleep(2);
+                humanoid->arm->GrabCup();
+                break;
             }
             else {
                printf("XERROR DNE | STOP\n"); 
@@ -60,9 +69,13 @@ int main (int argc, char** argv){
             bendDown = false; 
             printf("SETTING FALSE");
         }
-        else if( humanoid->detectnetController->GetCenterYFromBB(humanoid->detectnetController->bbArraySorted[0]) < ((1.0/5.0) * humanoid->detectnetController->GetCameraHeight()) ){
+        else if( humanoid->detectnetController->GetCenterYFromBB(humanoid->detectnetController->bbArraySorted[0]) > ((2.0/3.0) * humanoid->detectnetController->GetCameraHeight()) ){
             bendDown = true; 
             printf("SETTING TRUE");
+            printf("CENTER Y of BB: %f\n", humanoid->detectnetController->GetCenterYFromBB(humanoid->detectnetController->bbArraySorted[0]) );
+            printf("image threshold: %f\n", ((2.0/3.0) * humanoid->detectnetController->GetCameraHeight()) );
+        }
+        else {
         }
 
         sleep(1);

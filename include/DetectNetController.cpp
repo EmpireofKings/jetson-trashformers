@@ -15,7 +15,7 @@ DetectNetController::~DetectNetController(){
 
 //THREAD FUNCTIONS
 void DetectNetController::runThread(){
-//    runDetectNet(m_argc, m_argv);
+    runDetectNet(m_argc, m_argv);
 }
 void DetectNetController::JoinDetectThread(){
     detectNetThread->join();
@@ -114,7 +114,7 @@ float DetectNetController::GetCenterYFromBB(float* bb) {
 }
 
 float DetectNetController::GetErrorXOfTargetBB() {
-   const float offset = (1.0/3.0) * (GetCameraWidth());
+   const float offset = (1.0/4.0) * (GetCameraWidth());
    if(bbArraySorted.size() < 1) return NULL;
    float cX = GetCenterXFromBB(bbArraySorted[0]);
    if(cX == -1) return NULL;
