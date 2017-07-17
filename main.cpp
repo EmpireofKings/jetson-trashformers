@@ -2,7 +2,6 @@
 #include "include/BehaviorController.h"
 #include "include/Arm.h"
 #include <iostream>
-#include <signal.h>
 #include <thread>
 
 int main (int argc, char** argv){
@@ -30,7 +29,7 @@ int main (int argc, char** argv){
         float xError = humanoid->detectnetController->GetErrorXOfTargetBB();
         float bbArea = humanoid->detectnetController->GetAreaOfTargetBB(); 
 
-        if(xError == NULL || bbArea == -1) {
+        if(bbArea == -1) {
             if(grab){
                 humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::WALK_FORWARD);
                 humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::STOP);
