@@ -75,7 +75,7 @@ void Arm::SetGrabbingPose() {
 }
 
 void Arm::SetBendPose() {
-    Set(pose_bend[0], pose_bend[1], pose_bend[2], pose_bend[3], 200);
+    Set(pose_bend[0], pose_bend[1], pose_bend[2], pose_bend[3], 800);
 }
 
 void Arm::GrabCup() {
