@@ -6,7 +6,7 @@ DetectNetController::DetectNetController(int argc, char** argv){
     m_argv = argv;
 
     SetCameraPort(0);
-    detectNetThread = new std::thread(&DetectNetController::runThread, this);
+ //   detectNetThread = new std::thread(&DetectNetController::runThread, this);
 }
 
 DetectNetController::~DetectNetController(){

@@ -74,6 +74,10 @@ void Arm::SetGrabbingPose() {
     Set(pose_grabbing[0], pose_grabbing[1], pose_ready[2], pose_ready[3], 200);
 }
 
+void Arm::SetBendPose() {
+    Set(pose_bend[0], pose_bend[1], pose_bend[2], pose_bend[3], 400);
+}
+
 void Arm::GrabCup() {
     SetWrist(pose_grabbing[2], 200);
     SetClaw(pose_grabbing[3], 800);
@@ -93,6 +97,9 @@ void Arm::SetPose(ArmPose pose) {
             break;
         case ArmPose::GRAB:
             GrabCup();
+            break;
+        case ArmPose::BEND:
+            SetBendPose();
             break;
     }
 }
