@@ -14,7 +14,7 @@
 #define ELBOW_MIN 350
 
 #define WRIST_MAX 762
-#define WRIST_MIN 250
+#define WRIST_MIN 208
 
 #define CLAW_MAX 610
 #define CLAW_MIN 220
@@ -29,7 +29,8 @@ class Arm {
             DEFAULT,
             READY,
             GRABBING, 
-            GRAB
+            GRAB,
+            BEND
         };
 
         void Set(int pos_shoulder, int pos_elbow, int pos_wrist, int pos_claw, int vel_setpoint);
@@ -48,10 +49,12 @@ class Arm {
         int pose_default[4] = {342, 572, 762, 610};   
         int pose_ready[4] = {650, 700, 350, 220};
         int pose_grabbing[4] = {650, 480, 250, 530};
+        int pose_bend[4] = {549, 636, 208, 610};
         
         void SetDefaultPose();
         void SetReadyPose();
         void SetGrabbingPose();
+        void SetBendPose();
         void GrabCup(); 
 };
 
