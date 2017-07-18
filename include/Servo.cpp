@@ -1,4 +1,5 @@
 #include "Servo.h"
+#include <cmath>
 
 Servo::Servo(int dxl_id, dynamixel::PortHandler* portHandler) {
     m_dxl_id = dxl_id;
@@ -40,6 +41,10 @@ int Servo::SetPositionSetpoint(uint16_t setpoint) {
     }
 
     return 0;
+}
+
+bool Servo::IsMoving(int pos) {
+    return (std::abs(GetPosition() - pos) > SETPOINT_THRESHOLD) ? true : false;
 }
 
 int Servo::GetPosition() {

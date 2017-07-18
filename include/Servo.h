@@ -21,6 +21,8 @@
 
 #define TORQUE_SAFE 340
 
+#define SETPOINT_THRESHOLD 10
+
 #define DEVICENAME_DEFAULT "/dev/ttyUSB0"
 class Servo {
     public:				
@@ -31,6 +33,8 @@ class Servo {
         int Enable(bool enable);
         int SetPositionSetpoint(uint16_t setpoint);
         int GetPosition();
+        
+        bool IsMoving(int pos);
 
         int SetVelocitySetpoint(uint16_t setpoint);		
         void SetTorque(int torque);

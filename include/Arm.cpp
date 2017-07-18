@@ -79,9 +79,7 @@ void Arm::SetGrabbingPose() {
 void Arm::SetBendPose() {
     wrist->SetTorque(800);
     Set(pose_bend[0], pose_bend[1], pose_bend[2], pose_bend[3], 1023);
-    while( std::abs(wrist->GetPosition() - pose_bend[2]) > 10){
-    
-    }
+    while(wrist->IsMoving(pose_bend[2])){}
     wrist->SetTorque(TORQUE_SAFE);
 }
 
