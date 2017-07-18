@@ -8,7 +8,7 @@ Humanoid::Humanoid(int argc, char** argv) { //CONSTRUCTOR
     zigb = serialHandler->GetZigbController();
     behaviorController = new BehaviorController(serialHandler);    
     arm = new Arm(serialHandler);
-//    detectnetController = new DetectNetController(argc, argv);
+    detectnetController = new DetectNetController(argc, argv);
     keyboardController = new KeyboardController(zigb);
 }
 

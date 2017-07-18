@@ -15,7 +15,7 @@ int Servo::Enable(bool enable) {
     int torque = enable ? 1 : 0;
 
     dxl_comm_result = packetHandler->write1ByteTxRx(m_portHandler, m_dxl_id, ADDR_MX_TORQUE_ENABLE, torque, &dxl_error); 
-    SetSafeTorque(); 
+    dxl_comm_result = packetHandler->write2ByteTxRx(m_portHandler, m_dxl_id, ADDR_MX_GOAL_TORQUE, m_torque, &dxl_error);
     if( CheckError() ) {
         return -1;
     }
@@ -24,10 +24,8 @@ int Servo::Enable(bool enable) {
 }
 
 
-void Servo::SetSafeTorque() {
-
-    dxl_comm_result = packetHandler->write2ByteTxRx(m_portHandler, m_dxl_id, ADDR_MX_GOAL_TORQUE, 340, &dxl_error);
-
+void Servo::SetTorque(int torque) {
+    m_torque = torque;
 }
 
 int Servo::SetPositionSetpoint(uint16_t setpoint) {
@@ -42,7 +40,7 @@ int Servo::SetPositionSetpoint(uint16_t setpoint) {
 }
 
 int Servo::GetPosition() {
-
+    Enable(true);
     dxl_comm_result = packetHandler->read2ByteTxRx(m_portHandler, m_dxl_id, ADDR_MX_PRESENT_POSITION, &dxl_present_position, &dxl_error);
 
     if( CheckError() ) {
@@ -53,7 +51,6 @@ int Servo::GetPosition() {
 }
 
 int Servo::SetVelocitySetpoint(uint16_t setpoint) {
-    Enable(true);
     dxl_comm_result = packetHandler->write2ByteTxRx(m_portHandler, m_dxl_id, ADDR_MX_GOAL_SPEED, setpoint, &dxl_error);
 
     if( CheckError() ) {

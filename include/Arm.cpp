@@ -1,4 +1,5 @@
 #include "Arm.h"
+#include <unistd.h>
 
 #define SHOULDER_ID 1
 #define    ELBOW_ID 3
@@ -75,7 +76,9 @@ void Arm::SetGrabbingPose() {
 }
 
 void Arm::SetBendPose() {
+    wrist->SetTorque(800);
     Set(pose_bend[0], pose_bend[1], pose_bend[2], pose_bend[3], 800);
+    wrist->SetTorque(TORQUE_SAFE);
 }
 
 void Arm::GrabCup() {

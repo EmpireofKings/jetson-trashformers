@@ -42,14 +42,14 @@ class Arm {
 
         void SetPose(ArmPose pose);
        
+        Servo *shoulder, *elbow, *wrist, *claw;
     private:
         SerialHandler* m_serialHandler;
-        Servo *shoulder, *elbow, *wrist, *claw;
         int pos_shoulder, pos_elbow, pos_wrist, pos_claw;
-        int pose_default[4] = {342, 572, 762, 610};   
+        int pose_default[4] = {342, 572, 748, 610};   
         int pose_ready[4] = {650, 700, 350, 220};
         int pose_grabbing[4] = {650, 480, 250, 530};
-        int pose_bend[4] = {549, 636, 208, 610};
+        int pose_bend[4] = {549, 636, 250, 610};
         
         void SetDefaultPose();
         void SetReadyPose();

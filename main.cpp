@@ -11,12 +11,6 @@ int main (int argc, char** argv){
     humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::STOP);
     humanoid->arm->SetPose(Arm::ArmPose::DEFAULT);
 
-    std::cin.ignore();
-
-    humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::BEND_DOWN);
-    humanoid->arm->SetPose(Arm::ArmPose::BEND);
-
-    return 0;
     //do nothing until detectNet is ready
     while(!humanoid->detectnetController->IsDetectNetReady()) {
     }
