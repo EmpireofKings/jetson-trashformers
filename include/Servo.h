@@ -19,6 +19,8 @@
 #define TORQUE_ENABLE 1
 #define TORQUE_DISABLE 0
 
+#define TORQUE_SAFE 340
+
 #define DEVICENAME_DEFAULT "/dev/ttyUSB0"
 class Servo {
     public:				
@@ -31,7 +33,7 @@ class Servo {
         int GetPosition();
 
         int SetVelocitySetpoint(uint16_t setpoint);		
-        void SetSafeTorque();
+        void SetTorque(int torque);
     private: 
         int m_dxl_id;
         std::string* m_devicename;

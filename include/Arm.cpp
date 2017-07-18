@@ -1,4 +1,5 @@
 #include "Arm.h"
+#include <thread>
 
 #define SHOULDER_ID 1
 #define    ELBOW_ID 3
@@ -50,7 +51,7 @@ void Arm::SetWrist(int pos, int vel){
     pos = pos < WRIST_MIN ? WRIST_MIN : pos;
     wrist->SetVelocitySetpoint(vel);
     wrist->SetPositionSetpoint(pos);
-    pos_elbow = pos;
+    pos_wrist = pos;
 }
 
 void Arm::SetClaw(int pos, int vel){
@@ -75,7 +76,9 @@ void Arm::SetGrabbingPose() {
 }
 
 void Arm::SetBendPose() {
-    Set(pose_bend[0], pose_bend[1], pose_bend[2], pose_bend[3], 400);
+    wrist->SetTorque(1023);
+    Set(pose_bend[0], pose_bend[1], pose_bend[2], pose_bend[3], 1023);
+    wrist->SetTorque(TORQUE_SAFE);
 }
 
 void Arm::GrabCup() {
