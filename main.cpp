@@ -31,10 +31,10 @@ int main (int argc, char** argv){
 
         if(bbArea == -1) {
             if(grab && (humanoid->detectnetController->GetCupOrientation() == DetectNetController::CupOrientation::VERTICAL)){
+                printf("VERTICAL CUP FOUND\n");
                 humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::WALK_FORWARD);
                 humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::STOP);
                 humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::STRAFE_LEFT);
-                printf("BEND DOWN\n"); 
                 sleep(1);
                 humanoid->arm->SetPose(Arm::ArmPose::VERTICAL_READY);
                 sleep(1);
@@ -48,14 +48,24 @@ int main (int argc, char** argv){
                 grab = false; 
             }
             else if(grab && (humanoid->detectnetController->GetCupOrientation() == DetectNetController::CupOrientation::HORIZONTAL)){
+                printf("HORIZONTAL CUP FOUND\n");
                 humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::WALK_FORWARD);
                 humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::STOP);
                 humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::STRAFE_LEFT);
+                sleep(1);
+                humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::STRAFE_LEFT);
+                sleep(1);
+                humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::WALK_FORWARD);
+                humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::STOP);
+                sleep(1);
+
+                humanoid->arm->SetPose(Arm::ArmPose::BEND);
+                humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::BEND_DOWN);
                 printf("BEND DOWN\n"); 
                 sleep(1);
-                humanoid->arm->SetPose(Arm::ArmPose::READY);
+                humanoid->arm->SetPose(Arm::ArmPose::VERTICAL_READY);
                 sleep(1);
-                humanoid->arm->SetPose(Arm::ArmPose::GRABBING);
+                humanoid->arm->SetPose(Arm::ArmPose::VERTICAL_GRABBING);
                 sleep(1);
                 humanoid->arm->SetPose(Arm::ArmPose::GRAB);
 

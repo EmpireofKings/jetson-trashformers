@@ -51,7 +51,7 @@ void Arm::SetWrist(int pos, int vel){
     pos = pos < WRIST_MIN ? WRIST_MIN : pos;
     wrist->SetVelocitySetpoint(vel);
     wrist->SetPositionSetpoint(pos);
-    pos_elbow = pos;
+    pos_wrist = pos;
 }
 
 void Arm::SetClaw(int pos, int vel){
@@ -68,11 +68,11 @@ void Arm::SetDefaultPose() {
 }
 
 void Arm::SetVerticalReadyPose() {
-    Set(pose_ready[0], pose_ready[1], pose_ready[2], pose_ready[3], 200);   
+    Set(pose_vertical_ready[0], pose_vertical_ready[1], pose_vertical_ready[2], pose_vertical_ready[3], 200);   
 }
 
 void Arm::SetVerticalGrabbingPose() {
-    Set(pose_grabbing[0], pose_grabbing[1], pose_ready[2], pose_ready[3], 200);
+    Set(pose_vertical_grabbing[0], pose_vertical_grabbing[1], pose_vertical_grabbing[2], pose_vertical_grabbing[3], 200);
 }
 
 void Arm::SetBendPose() {
@@ -82,8 +82,8 @@ void Arm::SetBendPose() {
 }
 
 void Arm::GrabCup() {
-    SetWrist(pose_grabbing[2], 200);
-    SetClaw(pose_grabbing[3], 800);
+    SetWrist(pose_vertical_grabbing[2], 200);
+    SetClaw(pose_vertical_grabbing[3], 800);
 }
 
 void Arm::SetPose(ArmPose pose) {
