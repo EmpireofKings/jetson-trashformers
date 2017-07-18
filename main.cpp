@@ -22,15 +22,23 @@ int main (int argc, char** argv){
     int xReactionTolerance = 0.10 * humanoid->detectnetController->GetCameraWidth();
     int areaTolerance = 0.50 * humanoid->detectnetController->GetCameraWidth() * humanoid->detectnetController->GetCameraHeight();
 
-
     bool grab = false;
+    DetectNetController::CupOrientation cupOrientation = DetectNetController::CupOrientation::UNKNOWN;
+
+
+    bool seenCup = false;
     while(!humanoid->detectnetController->ReadStopSignal()){
+        if(!seenCup && humanoid->detectnetController->bbArraySorted.size() > 0){
+            cupOrientation = humanoid->detectnetController->GetCupOrientation(); 
+            seenCup = true;
+        }
+        
         humanoid->detectnetController->SortBBArrayByTargetDistance();
         float xError = humanoid->detectnetController->GetErrorXOfTargetBB();
         float bbArea = humanoid->detectnetController->GetAreaOfTargetBB(); 
 
         if(bbArea == -1) {
-            if(grab && (humanoid->detectnetController->GetCupOrientation() == DetectNetController::CupOrientation::VERTICAL)){
+            if(grab && (cupOrientation == DetectNetController::CupOrientation::VERTICAL)){
                 printf("VERTICAL CUP FOUND\n");
                 humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::WALK_FORWARD);
                 humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::STOP);
@@ -47,7 +55,7 @@ int main (int argc, char** argv){
                 humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::STOP);
                 grab = false; 
             }
-            else if(grab && (humanoid->detectnetController->GetCupOrientation() == DetectNetController::CupOrientation::HORIZONTAL)){
+            else if(grab && (cupOrientation == DetectNetController::CupOrientation::HORIZONTAL)){
                 printf("HORIZONTAL CUP FOUND\n");
                 humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::WALK_FORWARD);
                 humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::STOP);

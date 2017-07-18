@@ -162,7 +162,7 @@ float DetectNetController::GetCameraCenterY(){
 
 DetectNetController::CupOrientation DetectNetController::GetCupOrientation(){
     float* targetCup = GetTargetBB();
-    if(targetCup == nullptr) return CupOrientation::UKNOWN;
+    if(targetCup == nullptr) return CupOrientation::UNKNOWN;
     float width = targetCup[2] - targetCup[0];
     float height = targetCup[3] - targetCup[1];
     if(width > height) return CupOrientation::HORIZONTAL;
