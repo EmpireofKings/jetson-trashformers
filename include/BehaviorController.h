@@ -9,7 +9,7 @@ class BehaviorController {
 
     public:
 
-        enum class ControllerState {
+        enum ControllerState {
             WALK_FORWARD,
             WALK_BACKWARD,
             TURN_RIGHT,

@@ -1,5 +1,6 @@
 #include "include/Humanoid.h"
 #include "include/BehaviorController.h"
+#include "include/DetectNetController.h"
 #include "include/Arm.h"
 #include <iostream>
 #include <thread>
@@ -29,7 +30,24 @@ int main (int argc, char** argv){
         float bbArea = humanoid->detectnetController->GetAreaOfTargetBB(); 
 
         if(bbArea == -1) {
-            if(grab){
+            if(grab && (humanoid->detectnetController->GetCupOrientation() == DetectNetController::CupOrientation::VERTICAL)){
+                humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::WALK_FORWARD);
+                humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::STOP);
+                humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::STRAFE_LEFT);
+                printf("BEND DOWN\n"); 
+                sleep(1);
+                humanoid->arm->SetPose(Arm::ArmPose::VERTICAL_READY);
+                sleep(1);
+                humanoid->arm->SetPose(Arm::ArmPose::VERTICAL_GRABBING);
+                sleep(1);
+                humanoid->arm->SetPose(Arm::ArmPose::GRAB);
+
+                sleep(2);
+                humanoid->arm->SetPose(Arm::ArmPose::DEFAULT);
+                humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::STOP);
+                grab = false; 
+            }
+            else if(grab && (humanoid->detectnetController->GetCupOrientation() == DetectNetController::CupOrientation::HORIZONTAL)){
                 humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::WALK_FORWARD);
                 humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::STOP);
                 humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::STRAFE_LEFT);

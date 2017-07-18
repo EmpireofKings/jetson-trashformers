@@ -67,11 +67,11 @@ void Arm::SetDefaultPose() {
     Set(pose_default[0], pose_default[1], pose_default[2], pose_default[3], 200);
 }
 
-void Arm::SetReadyPose() {
+void Arm::SetVerticalReadyPose() {
     Set(pose_ready[0], pose_ready[1], pose_ready[2], pose_ready[3], 200);   
 }
 
-void Arm::SetGrabbingPose() {
+void Arm::SetVerticalGrabbingPose() {
     Set(pose_grabbing[0], pose_grabbing[1], pose_ready[2], pose_ready[3], 200);
 }
 
@@ -92,11 +92,11 @@ void Arm::SetPose(ArmPose pose) {
         case ArmPose::DEFAULT:
             SetDefaultPose();
             break;
-        case ArmPose::READY:
-            SetReadyPose();
+        case ArmPose::VERTICAL_READY:
+            SetVerticalReadyPose();
             break;
-        case ArmPose::GRABBING:
-            SetGrabbingPose();
+        case ArmPose::VERTICAL_GRABBING:
+            SetVerticalGrabbingPose();
             break;
         case ArmPose::GRAB:
             GrabCup();

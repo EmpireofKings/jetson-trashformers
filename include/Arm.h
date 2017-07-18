@@ -27,8 +27,8 @@ class Arm {
 
         enum class ArmPose {
             DEFAULT,
-            READY,
-            GRABBING, 
+            VERTICAL_READY,
+            VERTICAL_GRABBING, 
             GRAB,
             BEND
         };
@@ -47,13 +47,13 @@ class Arm {
         SerialHandler* m_serialHandler;
         int pos_shoulder, pos_elbow, pos_wrist, pos_claw;
         int pose_default[4] = {342, 572, 748, 610};   
-        int pose_ready[4] = {650, 700, 350, 220};
-        int pose_grabbing[4] = {650, 480, 250, 530};
+        int pose_vertical_ready[4] = {650, 700, 350, 220};
+        int pose_vertical_grabbing[4] = {650, 480, 250, 530};
         int pose_bend[4] = {549, 636, 250, 610};
         
         void SetDefaultPose();
-        void SetReadyPose();
-        void SetGrabbingPose();
+        void SetVerticalReadyPose();
+        void SetVerticalGrabbingPose();
         void SetBendPose();
         void GrabCup(); 
 };
