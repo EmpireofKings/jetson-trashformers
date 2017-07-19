@@ -28,11 +28,14 @@ int main (int argc, char** argv){
 
     bool seenCup = false;
     while(!humanoid->detectnetController->ReadStopSignal()){
+    
         if(!seenCup && humanoid->detectnetController->bbArraySorted.size() > 0){
             cupOrientation = humanoid->detectnetController->GetCupOrientation(); 
             seenCup = true;
         }
         
+        printf("ORIENTATION%i\n", cupOrientation);
+
         humanoid->detectnetController->SortBBArrayByTargetDistance();
         float xError = humanoid->detectnetController->GetErrorXOfTargetBB();
         float bbArea = humanoid->detectnetController->GetAreaOfTargetBB(); 
@@ -54,6 +57,7 @@ int main (int argc, char** argv){
                 humanoid->arm->SetPose(Arm::ArmPose::DEFAULT);
                 humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::STOP);
                 grab = false; 
+                seenCup = false;
             }
             else if(grab && (cupOrientation == DetectNetController::CupOrientation::HORIZONTAL)){
                 printf("HORIZONTAL CUP FOUND\n");
@@ -72,6 +76,7 @@ int main (int argc, char** argv){
                 printf("BEND DOWN\n"); 
                 sleep(1);
                 humanoid->arm->SetPose(Arm::ArmPose::VERTICAL_READY);
+                humanoid->arm->SetPose(Arm::ArmPose::VERTICAL_READY);
                 sleep(1);
                 humanoid->arm->SetPose(Arm::ArmPose::VERTICAL_GRABBING);
                 sleep(1);
@@ -81,6 +86,7 @@ int main (int argc, char** argv){
                 humanoid->arm->SetPose(Arm::ArmPose::DEFAULT);
                 humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::STOP);
                 grab = false; 
+                seenCup = false;
             }
             else {
                printf("STOP\n"); 
@@ -117,6 +123,4 @@ int main (int argc, char** argv){
 
     humanoid->detectnetController->JoinDetectThread();
     printf("Exiting..");
-
-    return 0;
 }
