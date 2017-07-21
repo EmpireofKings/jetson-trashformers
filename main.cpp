@@ -4,11 +4,28 @@
 #include <iostream>
 #include <thread>
 
-const std::string MODEL ("84");
-
 int main (int argc, char** argv){
+//args: int camPort, char* modelNum
+    int camPort = 0;
+    std::string modelNum;
     
-    Humanoid* humanoid = new Humanoid(MODEL);
+    //Parse arguments
+    switch(argc){
+        default: 
+            camPort = 0;
+            modelNum = "84";
+            break;
+        case 2: 
+            camPort = atoi(argv[1]);
+            modelNum = "84";
+            break;
+        case 3: 
+            camPort = atoi(argv[1]);
+            modelNum.assign(argv[2]);
+            break;
+    }
+    
+    Humanoid* humanoid = new Humanoid(camPort, modelNum);
 
     //Send STOP command to init zigbeecontroller
     humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::STOP);
