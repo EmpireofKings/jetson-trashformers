@@ -4,20 +4,23 @@
 #include <iostream>
 #include <thread>
 
+#define DEFAULT_CAMERA_PORT 0
+std::string DEFAULT_MODEL ("84");
+
 int main (int argc, char** argv){
 //args: int camPort, char* modelNum
-    int camPort = 0;
+    int camPort;
     std::string modelNum;
     
     //Parse arguments
     switch(argc){
         default: 
-            camPort = 0;
-            modelNum = "84";
+            camPort = DEFAULT_CAMERA_PORT;
+            modelNum = DEFAULT_MODEL;
             break;
         case 2: 
             camPort = atoi(argv[1]);
-            modelNum = "84";
+            modelNum = DEFAULT_MODEL;
             break;
         case 3: 
             camPort = atoi(argv[1]);
