@@ -13,7 +13,7 @@ bool getStopSignal();
 float* getConfCPU();
 
 bool getLoopLock();
-void setLoopLock();
+void setLoopLock(bool lockState);
 
 uint32_t getCameraHeight();
 uint32_t getCameraWidth();
