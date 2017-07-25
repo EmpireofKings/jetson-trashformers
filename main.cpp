@@ -7,8 +7,7 @@
 #define DEFAULT_CAMERA_PORT 0
 std::string DEFAULT_MODEL ("84");
 
-int main (int argc, char** argv){
-//args: int camPort, char* modelNum
+int main (int argc, char** argv){ //args: int camPort, char* modelNum
     int camPort;
     std::string modelNum;
     
@@ -33,7 +32,9 @@ int main (int argc, char** argv){
     //Send STOP command to init zigbeecontroller
     humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::STOP);
     
+    //Set arm to default pose
     humanoid->arm->SetPose(Arm::ArmPose::DEFAULT);
+
     //do nothing until detectNet is ready
     while(!humanoid->detectnetController->IsDetectNetReady()) {
         if(humanoid->detectnetController->ReadStopSignal()){
@@ -41,19 +42,22 @@ int main (int argc, char** argv){
         }
     }
 
-
+    //Get camera data from detectNet
     humanoid->detectnetController->ReadCameraResolution();
 
     //Define acceptable distance tolerance where robot will no longer react and try to turn
     int xReactionTolerance = 0.10 * humanoid->detectnetController->GetCameraWidth();
     int areaTolerance = 2.00 * humanoid->detectnetController->GetCameraWidth() * humanoid->detectnetController->GetCameraHeight();
-
+    
+    //If CTRL^C has not been pressed, run the main loop
     while(!humanoid->detectnetController->ReadStopSignal()){
         humanoid->UpdateState(xReactionTolerance, areaTolerance);
     }
 
+    //Merge main thread with detectNetcontroller thread
     humanoid->detectnetController->JoinDetectThread();
-    printf("Exiting..");
 
+    //exit program
+    printf("Exiting..\n");
     return 0;
 }
