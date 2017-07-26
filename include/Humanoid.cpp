@@ -24,8 +24,18 @@ void Humanoid::UpdateState(float xReactionTolerance, int areaTolerance) {
     
     detectnetController->SetDetectNetLoopLock(true);
     while(detectnetController->GetDetectNetLoopLock()){}
+    tmpCupOrientation = detectnetController->GetCupOrientation(); 
+    if(tmpCupOrientation == DetectNetController::CupOrientation::VERTICAL){
+        printf("CUP ORIENTATION: VERTICAL\n");
+    }
+    else if(tmpCupOrientation == DetectNetController::CupOrientation::HORIZONTAL){
+        printf("CUP ORIENTATION: HORIZONTAL\n");
+    }
+    else if(tmpCupOrientation == DetectNetController::CupOrientation::UNKNOWN){
+        printf("CUP ORIENTATION: UNKNOWN\n");
+    }
     
-    detectnetController->SortBBArrayByTargetDistance();
+    /*detectnetController->SortBBArrayByTargetDistance();
     float xErrorFromCenter = detectnetController->GetErrorXOfTargetBB(0.0);
     float xError = detectnetController->GetErrorXOfTargetBB((1.0/4.0) * detectnetController->GetCameraWidth());
     float yError = detectnetController->GetErrorYOfTargetBB();
@@ -121,22 +131,14 @@ void Humanoid::UpdateState(float xReactionTolerance, int areaTolerance) {
 	    }
 	    else if( detectnetController->GetCenterYFromBB(detectnetController->bbArraySorted[0]) > ((2.0/3.0) * detectnetController->GetCameraHeight()) ){
 		grab = true; 
-   		/*printf("GRAB: TRUE\n");
-		printf("CENTER Y of BB: %f\n", detectnetController->GetCenterYFromBB(detectnetController->bbArraySorted[0]) );
-		printf("image threshold: %f\n", ((2.0/3.0) * detectnetController->GetCameraHeight()) );*/
 	    }
 	    else {
 		grab = false; 
-		/*printf("GRAB: TOO HIGH\n");
-		printf("CENTER Y of BB: %f\n", detectnetController->GetCenterYFromBB(detectnetController->bbArraySorted[0]) );
-		printf("image threshold: %f\n", ((2.0/3.0) * detectnetController->GetCameraHeight()) );
-		printf("CENTER X of BB: %f\n", detectnetController->GetCenterXFromBB(detectnetController->bbArraySorted[0]) );
-		std::cout << (detectnetController->bbArraySorted[0])[0] << std::endl;*/
 	    }
     }
     
     sleep(sleepTime);
-
+    */
 }
 
 void Humanoid::GrabVerticalCup() { 
