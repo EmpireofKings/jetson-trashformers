@@ -18,6 +18,8 @@ class BehaviorController {
             STRAFE_RIGHT,
             DIAGONAL_RIGHT,
             DIAGONAL_LEFT, 
+            BACKWARD_DIAGONAL_RIGHT,
+            BACKWARD_DIAGONAL_LEFT, 
             BEND_DOWN,
             STOP
 

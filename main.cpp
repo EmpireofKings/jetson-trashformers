@@ -48,10 +48,30 @@ int main (int argc, char** argv){
     int xReactionTolerance = 0.10 * humanoid->detectnetController->GetCameraWidth();
     int areaTolerance = 2.00 * humanoid->detectnetController->GetCameraWidth() * humanoid->detectnetController->GetCameraHeight();
     int yReactionTolerance = 0.15 * humanoid->detectnetController->GetCameraHeight();
+    
+    
+    humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::BACKWARD_DIAGONAL_LEFT);
+    humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::STOP);
+    sleep(1);
+    humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::BACKWARD_DIAGONAL_LEFT);
+    humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::STOP);
+    sleep(1);
+    humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::BACKWARD_DIAGONAL_LEFT);
+    humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::STOP);
+    sleep(1);
+    humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::BACKWARD_DIAGONAL_LEFT);
+    humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::STOP);
+    sleep(1);
+    humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::BACKWARD_DIAGONAL_LEFT);
+    humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::STOP);
+    sleep(1);
+    humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::BACKWARD_DIAGONAL_LEFT);
+    humanoid->behaviorController->ChangeState(BehaviorController::ControllerState::STOP);
+    sleep(1);
 
-    while(!humanoid->detectnetController->ReadStopSignal()){
+    /*while(!humanoid->detectnetController->ReadStopSignal()){
         humanoid->UpdateState(xReactionTolerance, areaTolerance);
-    }
+    }*/
 
     humanoid->detectnetController->JoinDetectThread();
     printf("Exiting..");
