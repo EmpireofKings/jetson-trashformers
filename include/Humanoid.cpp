@@ -19,7 +19,7 @@ Humanoid::~Humanoid() {
 void Humanoid::UseKeyboard(){
     keyboardController->Init();
     keyboardController->RunInput();
-
+}
         
 void Humanoid::UpdateState(int xReactionTolerance, int areaTolerance) {
     
@@ -30,10 +30,10 @@ void Humanoid::UpdateState(int xReactionTolerance, int areaTolerance) {
    
     float xError = detectnetController->GetErrorXOfTargetBB();
     float bbArea = detectnetController->GetAreaOfTargetBB(); 
-    float classID = -1;
+    DetectNetController::ClassID classID = detectnetController->ConvertIntToClassID(-1);
 
     if(bbArea!= -1) {
-        classID = detectnetController->bbArraySorted[0][4]; //Create get class function and get target bb function
+        classID = detectnetController->GetClassIDFromSortedBB(TARGET_BB_IN_SORTED_ARRAY); 
     }
         
 
@@ -49,7 +49,7 @@ void Humanoid::UpdateState(int xReactionTolerance, int areaTolerance) {
             shouldGrab = false; 
             searchForTrashCan = true;
         } else if(searchForTrashCan) {
-            printf("TURNING\n");
+            printf("SEARCHING FOR TRASH CAN\n");
             behaviorController->ChangeState(BehaviorController::ControllerState::DIAGONAL_DORSAL_RIGHT);
             behaviorController->ChangeState(BehaviorController::ControllerState::STOP);
         } else if(release) {
@@ -82,26 +82,15 @@ void Humanoid::UpdateState(int xReactionTolerance, int areaTolerance) {
     }
     else if( detectnetController->GetCenterYFromBB(detectnetController->bbArraySorted[0]) > ((2.0/3.0) * detectnetController->GetCameraHeight()) ){
         printf("CLASS ID: %f\n", classID);
-        if(classID == 1 && searchForTrashCan) { //class ID of trashcan
+        if(classID == DetectNetController::ClassID::TRASHCAN && searchForTrashCan) { //class ID of trashcan
             searchForTrashCan = false;
             release = true;
-            printf("RELEASE: TRUE\n");
-            printf("CENTER Y of BB: %f\n", detectnetController->GetCenterYFromBB(detectnetController->bbArraySorted[0]) );  
-            printf("image threshold: %f\n", ((2.0/3.0) * detectnetController->GetCameraHeight()) );  
-        } else if(classID == 0 && !searchForTrashCan) {
+        } else if(classID == DetectNetController::ClassID::CUP && !searchForTrashCan) {
             shouldGrab = true; 
-            printf("GRAB: TRUE\n");
-            printf("CENTER Y of BB: %f\n", detectnetController->GetCenterYFromBB(detectnetController->bbArraySorted[0]) );
-            printf("image threshold: %f\n", ((2.0/3.0) * detectnetController->GetCameraHeight()) );
         } 
     }
     else {
         shouldGrab = false; 
-        printf("GRAB: TOO HIGH\n");
-        printf("CENTER Y of BB: %f\n", detectnetController->GetCenterYFromBB(detectnetController->bbArraySorted[0]) );
-        printf("image threshold: %f\n", ((2.0/3.0) * detectnetController->GetCameraHeight()) );
-        printf("CENTER X of BB: %f\n", detectnetController->GetCenterXFromBB(detectnetController->bbArraySorted[0]) );
-        std::cout << (detectnetController->bbArraySorted[0])[0] << std::endl;
     }
     sleep(1);
 

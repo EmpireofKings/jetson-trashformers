@@ -37,7 +37,7 @@ class Humanoid {
         ZigbController* zigb;
         KeyboardController* keyboardController;
         bool shouldGrab = false;
-        bool searchForCan = false;
+        bool searchForTrashCan = false;
         bool release = false;
 };
 
