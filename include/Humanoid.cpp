@@ -50,8 +50,12 @@ void Humanoid::UpdateState(int xReactionTolerance, int areaTolerance) {
             searchForTrashCan = true;
         } else if(searchForTrashCan) {
             printf("SEARCHING FOR TRASH CAN\n");
+            behaviorController->ChangeState(BehaviorController::ControllerState::DIAGONAL_FRONTAL_LEFT);
+            behaviorController->ChangeState(BehaviorController::ControllerState::STOP);
+            sleep(1);
             behaviorController->ChangeState(BehaviorController::ControllerState::DIAGONAL_DORSAL_RIGHT);
             behaviorController->ChangeState(BehaviorController::ControllerState::STOP);
+            sleep(1);
         } else if(release) {
             printf("RELEASING CUP\n");
             ReleaseCup();
@@ -81,7 +85,7 @@ void Humanoid::UpdateState(int xReactionTolerance, int areaTolerance) {
         printf("GRAB: NO CUP\n");
     }
     else if( detectnetController->GetCenterYFromBB(detectnetController->bbArraySorted[0]) > ((2.0/3.0) * detectnetController->GetCameraHeight()) ){
-        printf("CLASS ID: %f\n", classID);
+        printf("CLASS ID: %i\n", (int)classID);
         if(classID == DetectNetController::ClassID::TRASHCAN && searchForTrashCan) { //class ID of trashcan
             searchForTrashCan = false;
             release = true;
