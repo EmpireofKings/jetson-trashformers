@@ -125,8 +125,9 @@ int runDetectNet( std::string modelNum )
     /* * create the second camera device */
 	gstCamera* camera1 = gstCamera::Create(camera_source);
 	gstCamera* camera2 = gstCamera::Create(2);
-
-    camera = camera2;
+    
+    //BIG PART
+    camera = camera1;
 	
 	if( !camera1 || !camera2 )
 	{
@@ -203,18 +204,20 @@ int runDetectNet( std::string modelNum )
 	/*
 	 * start streaming
 	 */
-	if( !camera1->Open() )
+	if( !camera->Open() )
 	{
 		printf("\ndetectnet-camera:  failed to open camera 1 for streaming\n");
 		return 0;
 	}
-
+    
+    /*
 	if( !camera2->Open() )
 	{
 		printf("\ndetectnet-camera:  failed to open camera 2 for streaming\n");
 		return 0;
 	}
-	
+    */
+
 	printf("\ndetectnet-camera:  camera open for streaming\n");
 	
     //ADDED CAMERA FOR FUNCTIONS --MICHAEL
@@ -229,6 +232,7 @@ int runDetectNet( std::string modelNum )
 
     
 	
+    int loopCount = 0;
 	while( !signal_recieved )
 	{
         while(!signal_recieved && !loopLock){   
@@ -329,6 +333,22 @@ int runDetectNet( std::string modelNum )
     
 			display->EndRender();
 		}
+
+       loopCount++;
+       if(loopCount % 10 == 0){
+         if(camera == camera1){
+            printf("SWITCHING TO CAMERA 2\n");
+            camera1->Close();
+            camera2->Open();
+            camera = camera2;
+         } else {
+            printf("SWITCHING TO CAMERA 1\n");
+            camera2->Close();
+            camera1->Open();
+            camera = camera1;
+         }
+       }
+       printf("loopCount: %i\n", loopCount);
        loopLock = false;
 	}
 	
