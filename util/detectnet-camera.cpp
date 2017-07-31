@@ -121,19 +121,29 @@ int runDetectNet( std::string modelNum )
 	/*
 	 * create the camera device
 	 */
-	gstCamera* camera = gstCamera::Create(camera_source);
+	gstCamera* camera; 
+    /* * create the second camera device */
+	gstCamera* camera1 = gstCamera::Create(camera_source);
+	gstCamera* camera2 = gstCamera::Create(2);
+
+    camera = camera2;
 	
-	if( !camera )
+	if( !camera1 || !camera2 )
 	{
-		printf("\ndetectnet-camera:  failed to initialize video device\n");
+		printf("\ndetectnet-camera:  failed to initialize video device(s)\n");
 		return 0;
 	}
 	
 
-	printf("\ndetectnet-camera:  successfully initialized video device\n");
-	printf("    width:  %u\n", camera->GetWidth());
-	printf("   height:  %u\n", camera->GetHeight());
-	printf("    depth:  %u (bpp)\n\n", camera->GetPixelDepth());
+	printf("\nCAM1 detectnet-camera:  successfully initialized video device\n");
+	printf("CAM1    width:  %u\n", camera1->GetWidth());
+	printf("CAM1   height:  %u\n", camera1->GetHeight());
+	printf("CAM1    depth:  %u (bpp)\n\n", camera1->GetPixelDepth());
+
+	printf("\nCAM2 detectnet-camera:  successfully initialized video device\n");
+	printf("CAM2    width:  %u\n", camera2->GetWidth());
+	printf("CAM2   height:  %u\n", camera2->GetHeight());
+	printf("CAM2    depth:  %u (bpp)\n\n", camera2->GetPixelDepth());
 	
     std::string network = "networks/snapshot_iter_" + modelNum + ".caffemodel"; 
 	/*
@@ -184,7 +194,6 @@ int runDetectNet( std::string modelNum )
 			printf("detectnet-camera:  failed to create openGL texture\n");
 	}
 	
-	
 	/*
 	 * create font
 	 */
@@ -194,9 +203,15 @@ int runDetectNet( std::string modelNum )
 	/*
 	 * start streaming
 	 */
-	if( !camera->Open() )
+	if( !camera1->Open() )
 	{
-		printf("\ndetectnet-camera:  failed to open camera for streaming\n");
+		printf("\ndetectnet-camera:  failed to open camera 1 for streaming\n");
+		return 0;
+	}
+
+	if( !camera2->Open() )
+	{
+		printf("\ndetectnet-camera:  failed to open camera 2 for streaming\n");
 		return 0;
 	}
 	
@@ -211,6 +226,8 @@ int runDetectNet( std::string modelNum )
 	 * processing loop
 	 */
 	float confidence = 0.0f;
+
+    
 	
 	while( !signal_recieved )
 	{
@@ -227,7 +244,7 @@ int runDetectNet( std::string modelNum )
 		// convert from YUV to RGBA
 		void* imgRGBA = NULL;
 		
-		if( !camera->ConvertRGBA(imgCUDA, &imgRGBA) )
+		if( !camera2->ConvertRGBA(imgCUDA, &imgRGBA) )
 			printf("detectnet-camera:  failed to convert from NV12 to RGBA\n");
 
 		// classify image with detectNet
