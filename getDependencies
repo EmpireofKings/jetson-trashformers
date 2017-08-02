@@ -1,5 +1,14 @@
 #!/bin/bash
 
+if [[ -f ./util/zigbee.h && -f ./lib/libzgb.a ]]; then
+    echo "Zigbee already installed"
+    exit 1
+fi
+
+##########DOWNLOADING ZIGB#############
+
+echo "####### Download Zigbee Dependencies ########"
+
 #Download zigb files to a zip folder
 wget -N http://support.robotis.com/en/baggage_files/zigbee_sdk/zigbee_sdk_linux_v1_00.zip
 
