@@ -3,6 +3,9 @@
 #run script to download dependencies 
 ./getDependencies
 
+#build project
+make
+
 #export path for library path
 export LD_LIBRARY_PATH=lib:$LD_LIBRARY_PATH
 
