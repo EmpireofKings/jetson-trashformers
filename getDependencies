@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [[ -f ./util/zigbee.h && -f ./lib/libzgb.a ]]; then
-    echo "Zigbee already installed"
+    echo "Remote dependancies already installed"
 else
 
 ##########DOWNLOADING ZIGB#############
