@@ -2,8 +2,7 @@
 
 if [[ -f ./util/zigbee.h && -f ./lib/libzgb.a ]]; then
     echo "Zigbee already installed"
-    exit 1
-fi
+else
 
 ##########DOWNLOADING ZIGB#############
 
@@ -30,5 +29,4 @@ cp ./ZIGBEE_SDK_Linux_v1_00/lib/libzgb.a ./lib
 #remove ZIGBEE src folder
 rm -rf ./ZIGBEE_SDK_Linux_v1_00
 
-
-
+fi
