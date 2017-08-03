@@ -1,5 +1,6 @@
 *.o
 *.swp
+*.tensorcache
 main
 lib/libzgb.a
 util/zigbee.h
