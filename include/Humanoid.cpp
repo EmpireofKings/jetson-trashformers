@@ -205,12 +205,13 @@ bool Humanoid::Searching() {
         printf("TURNING!\n"); 
         Turn(1);
     }
+    Turn(1);
     shouldSwitchCams = false;
 
     bool found;
     if(detectnetController->ConvertIntToClassID(detectnetController->GetTargetBB(targetClassID)[4]) == DetectNetController::ClassID::UNKNOWN){
        found = false;
-       shouldSwitchCams = true;
+       //shouldSwitchCams = true;
     } else {
        found = true;
        shouldSwitchCams = false;
